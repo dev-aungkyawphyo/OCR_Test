@@ -18,6 +18,7 @@ class ViewController: UIViewController {
         
         guard url != nil else {
             print("Error creating url object")
+            return
         }
         
         // URL Request
@@ -63,11 +64,17 @@ class ViewController: UIViewController {
             // Check for errors
             if error == nil && data != nil {
                 // Try to parse out the data
-                
+                do {
+                    let dictionary = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? [String : Any]
+                    print(dictionary as Any)
+                } catch {
+                    print("Error parsing respone data")
+                }
             }
         }
         
         // Fire off the data task
+        dataTask.resume()
     }
 
 
